@@ -98,6 +98,7 @@ RTC::ReturnCode_t RGBDCameraTester::onShutdown(RTC::UniqueId ec_id)
 RTC::ReturnCode_t RGBDCameraTester::onActivated(RTC::UniqueId ec_id)
 {
 	cv::namedWindow("Source Image");
+	cv::namedWindow("Depth Image");
   return RTC::RTC_OK;
 }
 
@@ -118,8 +119,22 @@ RTC::ReturnCode_t RGBDCameraTester::onExecute(RTC::UniqueId ec_id)
 		if (convertImgToCvMat(m_rgbd.data.cameraImage, m_srcImage)) {
 			cv::imshow("Source Image", m_srcImage);
 
-			cv::waitKey(1);
 		}
+
+		cv::Mat depthImage(m_rgbd.data.depthImage.height, m_rgbd.data.depthImage.width, CV_8UC1);
+		double min_distance = 0.2;
+		double max_distance = 2.0;
+		for (int i = 0; i < m_rgbd.data.depthImage.height; i++) {
+			for (int j = 0; j < m_rgbd.data.depthImage.width; j++) {
+				int index = i * m_rgbd.data.depthImage.width + j;
+				double distance = m_rgbd.data.depthImage.raw_data[index];
+				if (distance < min_distance) { distance = min_distance; }
+				else if (distance > max_distance) { distance = max_distance; }
+				depthImage.data[index] = (m_rgbd.data.depthImage.raw_data[index] - min_distance) / max_distance * 255;
+			}
+		}
+		cv::imshow("Depth Image", depthImage);
+		cv::waitKey(1);
 	}
   return RTC::RTC_OK;
 }
