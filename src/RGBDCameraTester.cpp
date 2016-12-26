@@ -94,26 +94,36 @@ RTC::ReturnCode_t RGBDCameraTester::onShutdown(RTC::UniqueId ec_id)
 }
 */
 
-/*
+
 RTC::ReturnCode_t RGBDCameraTester::onActivated(RTC::UniqueId ec_id)
 {
+	cv::namedWindow("Source Image");
   return RTC::RTC_OK;
 }
-*/
 
-/*
+
+
 RTC::ReturnCode_t RGBDCameraTester::onDeactivated(RTC::UniqueId ec_id)
 {
+	cv::destroyAllWindows();
   return RTC::RTC_OK;
 }
-*/
 
-/*
+
+
 RTC::ReturnCode_t RGBDCameraTester::onExecute(RTC::UniqueId ec_id)
 {
+	if (m_rgbdIn.isNew()) {
+		m_rgbdIn.read();
+		if (convertImgToCvMat(m_rgbd.data.cameraImage, m_srcImage)) {
+			cv::imshow("Source Image", m_srcImage);
+
+			cv::waitKey(1);
+		}
+	}
   return RTC::RTC_OK;
 }
-*/
+
 
 /*
 RTC::ReturnCode_t RGBDCameraTester::onAborting(RTC::UniqueId ec_id)

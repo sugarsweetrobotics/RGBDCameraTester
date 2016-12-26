@@ -38,6 +38,10 @@ using namespace RGBDCamera;
 
 using namespace RTC;
 
+#include <opencv2/opencv.hpp>
+#include "ImageUtil.h"
+
+
 /*!
  * @class RGBDCameraTester
  * @brief RGBDCameraImage Test Component
@@ -125,7 +129,7 @@ class RGBDCameraTester
    * 
    * 
    */
-  // virtual RTC::ReturnCode_t onActivated(RTC::UniqueId ec_id);
+   virtual RTC::ReturnCode_t onActivated(RTC::UniqueId ec_id);
 
   /***
    *
@@ -138,7 +142,7 @@ class RGBDCameraTester
    * 
    * 
    */
-  // virtual RTC::ReturnCode_t onDeactivated(RTC::UniqueId ec_id);
+   virtual RTC::ReturnCode_t onDeactivated(RTC::UniqueId ec_id);
 
   /***
    *
@@ -151,7 +155,7 @@ class RGBDCameraTester
    * 
    * 
    */
-  // virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
+   virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
 
   /***
    *
@@ -272,6 +276,7 @@ class RGBDCameraTester
   
   // </rtc-template>
 
+	 cv::Mat m_srcImage;
 };
 
 
