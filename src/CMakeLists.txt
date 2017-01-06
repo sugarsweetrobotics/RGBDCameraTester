@@ -2,7 +2,8 @@ set(comp_srcs RGBDCameraTester.cpp )
 set(standalone_srcs RGBDCameraTesterComp.cpp)
 
 find_package(OpenCV REQUIRED)
-set(RTMCAMERA_LIBRARY "rtmCamera112_vc14")
+
+set(RTMCAMERA_LIBRARY "optimized;rtmCamera112_vc14;debug;rtmCamera112_vc14d")
 
 if (DEFINED OPENRTM_INCLUDE_DIRS)
   string(REGEX REPLACE "-I" ";"
